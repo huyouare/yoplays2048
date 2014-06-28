@@ -32,7 +32,9 @@ app.get('/api', function (req, res) {
 app.get('/yo-up', function (req, res) {
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
-  
+  var user = req.query.username;
+  console.log(user);
+
   socket = {};
   socket.userId = ++nextUserId;
 
