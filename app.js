@@ -36,7 +36,7 @@ app.get('/yo-up', function (req, res) {
   console.log(user);
 
   socket = {};
-  socket.userId = ++nextUserId;
+  socket.userId = user;
 
   var direction = 0;
   // Multiplayer
@@ -111,7 +111,7 @@ if (democracy) {
     var gameData = game.getGameData();
     var data = {
       direction: direction,
-      userId: "Democracy",
+      userId: "Yo",
       numUsers: io.sockets.clients().length,
       gameData: gameData
     };

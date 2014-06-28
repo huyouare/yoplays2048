@@ -32,7 +32,7 @@ socket.on('move', function (data) {
   var userId = data.userId;
   var moveElement = document.createElement('li');
 
-  var userIdString = 'User ' + userId;
+  var userIdString = userId;
   if (userId === yourUserId) {
     userIdString = '<strong>' + userIdString + '</strong>';
   }
@@ -52,7 +52,7 @@ socket.on('move', function (data) {
 
   // Set the game state (if we're not in a pause state)
   if (!(manager.won || manager.over)) {
-    if (!democracy || userId == "Democracy") {
+    if (!democracy || userId == "Yo") {
       var gameData = data.gameData;
       manager.setGameData(gameData);
     }
