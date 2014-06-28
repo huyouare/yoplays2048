@@ -29,9 +29,8 @@ app.get('/api', function (req, res) {
   res.send(data);
 });
 
-app.get('/yo-up', function (req, res) {
-  var url_parts = url.parse(req.url, true);
-  var query = url_parts.query;
+app.get('/up', function (req, res) {
+
   var user = req.query.username;
   console.log(user);
 
@@ -57,11 +56,68 @@ app.get('/yo-up', function (req, res) {
   }
 });
 
-app.get('/yo-down', function (req, res) {
+app.get('/right', function (req, res) {
+  var user = req.query.username;
+  console.log(user);
+
   socket = {};
-  socket.userId = ++nextUserId;
+  socket.userId = user;
+
+  var direction = 1;
+  // Multiplayer
+  var spamming = false;
+  if (!voted && !spamming) {
+    voted = true;
+    votes[direction]++;
+
+    // Send the move with the same old game state
+    var gameData = game.getGameData();
+    var data = {
+      direction: direction,
+      userId: socket.userId,
+      numUsers: nextUserId,
+      gameData: gameData
+    };
+    io.sockets.emit('move', data);
+  }
+});
+
+app.get('/down', function (req, res) {
+  var user = req.query.username;
+  console.log(user);
+
+  socket = {};
+  socket.userId = user;
 
   var direction = 2;
+  // Multiplayer
+  var spamming = false;
+  if (!voted && !spamming) {
+    voted = true;
+    votes[direction]++;
+
+    // Send the move with the same old game state
+    var gameData = game.getGameData();
+    var data = {
+      direction: direction,
+      userId: socket.userId,
+      numUsers: nextUserId,
+      gameData: gameData
+    };
+    io.sockets.emit('move', data);
+  }
+});
+
+app.get('/left', function (req, res) {
+  var url_parts = url.parse(req.url, true);
+  var query = url_parts.query;
+  var user = req.query.username;
+  console.log(user);
+
+  socket = {};
+  socket.userId = user;
+
+  var direction = 3;
   // Multiplayer
   var spamming = false;
   if (!voted && !spamming) {
@@ -134,7 +190,8 @@ if (democracy) {
 }
 
 io.sockets.on('connection', function (socket) {
-  socket.userId = ++nextUserId;
+  socket.userId = "User " + (nextUserId+1);
+  ++nextUserId;
 
   // When connecting
   var gameData = game.getGameData();
