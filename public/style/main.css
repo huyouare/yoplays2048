@@ -4,6 +4,7 @@
 .game-container {
   color: #776e65
 }
-h1#title {
-  font-size: 80px;
+h1.title {
+  margin:auto;
+  font-size: 120px;
 }

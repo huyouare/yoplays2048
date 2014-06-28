@@ -19,6 +19,34 @@ var port = process.env.PORT || 8000;
 server.listen(port);
 console.log("Listening at port: " + port);
 
+function gameWin() {
+  var request = require('request');
+
+  request.post(
+    {url:     "http://api.justyo.co/yoall/",
+    form:    { "api_token" : "05f23446-d34c-523e-6c7b-48de0cd8d20c" }
+    },
+    function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
+    });
+}
+
+function gameLose() {
+  var request = require('request');
+
+  request.post(
+    {url:     "http://api.justyo.co/yoall/",
+    form:    { "api_token" : "cb0e12d0-1296-d9d5-d501-b427b086d574" }
+    },
+    function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
+    });
+}
+
 // Routes
 app.get('/api', function (req, res) {
   var data = game.getGameData();
@@ -174,7 +202,7 @@ if (democracy) {
     io.sockets.emit('move', data);
 
     // Reset the game if it is game over or won
-    if (gameData.over || gameData.won) {
+    if (gameData.over || gameData.won) {    
       game.restart(function () {
         var data = game.getGameData();
         data.highscores = game.getHighscores();
