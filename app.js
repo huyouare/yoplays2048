@@ -21,7 +21,6 @@ console.log("Listening at port: " + port);
 
 // Routes
 app.get('/api', function (req, res) {
-
   var data = game.getGameData();
   data.highscores = game.getScores();
   data.moveCount = moveCount;
@@ -208,7 +207,6 @@ io.sockets.on('connection', function (socket) {
     });
   });
 });
-
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
