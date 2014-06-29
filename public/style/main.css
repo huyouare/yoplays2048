@@ -19,8 +19,11 @@ h1.title a {
 a {
   color: #FFF;
 }
+.links .first{
+  font-size: 18px;
+}
 .links {
-  font-size: 16px;
+  font-size: 12px;
 }
 .tile.tile-2 {
   background-color: #1BBC9B;
