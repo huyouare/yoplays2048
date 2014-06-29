@@ -307,53 +307,53 @@ io.sockets.on('connection', function (socket) {
   for (var i = 0; i < numMovesPerSecond; i++) {
     pastEvents.push(0);
   }
-  // socket.on('move', function (direction) {
-  //   if (democracy) {
-  //     // Keep track of events
-  //     pastEvents.push(new Date().getTime());
-  //     pastEvents.splice(0, pastEvents.length - numMovesPerSecond);
+  socket.on('move', function (direction) {
+    if (democracy) {
+      // Keep track of events
+      pastEvents.push(new Date().getTime());
+      pastEvents.splice(0, pastEvents.length - numMovesPerSecond);
 
-  //     // Multiplayer
-  //     var spamming = pastEvents[pastEvents.length - 1] - pastEvents[0] < 1000;
-  //     if (!voted && !spamming) {
-  //       voted = true;
-  //       votes[direction]++;
+      // Multiplayer
+      var spamming = pastEvents[pastEvents.length - 1] - pastEvents[0] < 1000;
+      if (!voted && !spamming) {
+        voted = true;
+        votes[direction]++;
 
-  //       // Send the move with the same old game state
-  //       var gameData = game.getGameData();
-  //       var data = {
-  //         direction: direction,
-  //         userId: socket.userId,
-  //         numUsers: io.sockets.clients().length,
-  //         gameData: gameData
-  //       };
-  //       io.sockets.emit('move', data);
-  //     }
-  //   } else {
-  //     ++moveCount;
-  //     // update the game
-  //     game.move(direction);
+        // Send the move with the same old game state
+        var gameData = game.getGameData();
+        var data = {
+          direction: direction,
+          userId: socket.userId,
+          numUsers: io.sockets.clients().length,
+          gameData: gameData
+        };
+        io.sockets.emit('move', data);
+      }
+    } else {
+      ++moveCount;
+      // update the game
+      game.move(direction);
 
-  //     // Send the move with the game state
-  //     var gameData = game.getGameData();
-  //     var data = {
-  //       direction: direction,
-  //       userId: socket.userId,
-  //       numUsers: io.sockets.clients().length,
-  //       gameData: gameData
-  //     };
-  //     io.sockets.emit('move', data);
+      // Send the move with the game state
+      var gameData = game.getGameData();
+      var data = {
+        direction: direction,
+        userId: socket.userId,
+        numUsers: io.sockets.clients().length,
+        gameData: gameData
+      };
+      io.sockets.emit('move', data);
 
-  //     // Reset the game if it is game over or won
-  //     if (gameData.over || gameData.won) {
-  //       game.restart(function () {
-  //         var data = game.getGameData();
-  //         data.highscores = game.getHighscores();
-  //         io.sockets.emit('restart', data);
-  //       });
-  //     }
-  //   }
-  // });
+      // Reset the game if it is game over or won
+      if (gameData.over || gameData.won) {
+        game.restart(function () {
+          var data = game.getGameData();
+          data.highscores = game.getHighscores();
+          io.sockets.emit('restart', data);
+        });
+      }
+    }
+  });
 
   socket.on('disconnect', function () {
     io.sockets.emit('someone disconnected', {
