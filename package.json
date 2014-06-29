@@ -1,5 +1,5 @@
 {
-  "name": "hnplays2048",
+  "name": "yoplays2048",
   "version": "0.0.0",
   "description": "Multiplayer 2048!",
   "main": "app.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/grant/hnplays2048.git"
+    "url": "git://github.com/huyouare/yoplays2048.git"
   },
   "keywords": [
     "multiplayer",
@@ -22,7 +22,8 @@
   "homepage": "https://github.com/grant/hnplays2048",
   "dependencies": {
     "socket.io": "^0.9.16",
-    "express": "^3.5.0"
+    "express": "^3.5.0",
+    "request": ">= 0.0.1"
   },
   "engines": {
     "node": "0.10.x",
