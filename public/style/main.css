@@ -8,6 +8,15 @@ h1.title {
   margin:auto;
   font-size: 120px;
 }
+h1.title a {
+  text-decoration: none;
+}
 .hidden-p {
   display:none;
+}
+a {
+  color: #FFF;
+}
+.links {
+  font-size: 16px;
 }

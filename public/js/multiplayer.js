@@ -89,7 +89,7 @@ function setHighscores (highscores) {
 function updateUserCount (data) {
   var numUsers = data.numUsers;
   userCount.innerHTML = numUsers;
-  userString.innerHTML = numUsers === 1 ? 'user' : 'users';
+  userString.innerHTML = numUsers === 1 ? 'Yo' : 'Yos';
 }
 
 //// Pretty date adapted from https://github.com/netcode/node-prettydate

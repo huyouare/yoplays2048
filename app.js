@@ -52,12 +52,14 @@ app.get('/api', function (req, res) {
   var data = game.getGameData();
   data.highscores = game.getScores();
   data.moveCount = moveCount;
-  data.numUsers = io.sockets.clients().length; // Online users
+  data.numUsers = nextUserId; // Online users
   data.totalNumUsers = nextUserId; // Visitor count
   res.send(data);
 });
 
 app.get('/up', function (req, res) {
+  ++nextUserId;
+  console.log(nextUserId);
 
   var user = req.query.username;
   console.log(user);
@@ -78,7 +80,8 @@ app.get('/up', function (req, res) {
       direction: direction,
       userId: socket.userId,
       numUsers: nextUserId,
-      gameData: gameData
+      gameData: gameData,
+      highscores: game.getHighscores()
     };
     io.sockets.emit('move', data);
 
@@ -100,6 +103,8 @@ app.get('/up', function (req, res) {
 });
 
 app.get('/right', function (req, res) {
+  ++nextUserId;
+
   var user = req.query.username;
   console.log(user);
 
@@ -258,7 +263,7 @@ if (democracy) {
     var data = {
       direction: direction,
       userId: "Yo",
-      numUsers: io.sockets.clients().length,
+      numUsers: nextUserId,
       gameData: gameData
     };
     io.sockets.emit('move', data);
@@ -281,19 +286,19 @@ if (democracy) {
 
 io.sockets.on('connection', function (socket) {
   socket.userId = "User " + (nextUserId+1);
-  ++nextUserId;
+  // ++nextUserId;
 
   // When connecting
   var gameData = game.getGameData();
   var data = {
     userId: socket.userId,
     gameData: gameData,
-    numUsers: io.sockets.clients().length,
+    numUsers: nextUserId,
     highscores: game.getHighscores()
   };
   socket.emit('connected', data);
   socket.broadcast.emit('someone connected', {
-    numUsers: io.sockets.clients().length
+    numUsers: nextUserId
   });
 
   // When someone moves
@@ -352,7 +357,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('disconnect', function () {
     io.sockets.emit('someone disconnected', {
-      numUsers: io.sockets.clients().length,
+      numUsers: nextUserId,
     });
   });
 });
