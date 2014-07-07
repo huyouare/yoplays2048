@@ -237,7 +237,7 @@ app.get('*', function (req, res) {
 
 // Setup game
 var democracy = true;
-var nextUserId = 6178;
+var nextUserId = 7178;
 var moveCount = 0;
 var game = require('./private/js/game');
 
